@@ -16,10 +16,13 @@ public class Usuario {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @Column(nullable = false)
     private String nome;
+
+    @Column(nullable = false, unique = true)
+    private String email;
 
     @Column(nullable = false, unique = true)
     private String cpf;
