@@ -8,17 +8,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class UsuarioService {
 
-    private static UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
+
+    public UsuarioService(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
+    }
 
     public String cadastrarUsuario(CadastroUsuarioDTO dto){
         if (usuarioRepository.existsUsuarioByEmail(dto.email())) {
             throw new RuntimeException("O usuário já está cadastrado!");
-        } else {
-            Usuario novoUsuario = new Usuario(dto);
-            usuarioRepository.save(novoUsuario);
-            String nomeUsuario = dto.nome();
-            return "O usuário " + nomeUsuario + " foi cadastrado com sucesso!";
         }
-    }
 
+        Usuario novoUsuario = new Usuario(dto);
+        usuarioRepository.save(novoUsuario);
+
+        return "O usuário " + dto.nome() + " foi cadastrado com sucesso!";
+    }
 }
