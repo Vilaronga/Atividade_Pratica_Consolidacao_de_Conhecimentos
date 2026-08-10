@@ -5,6 +5,10 @@ import com.dev.consolidacaodeconhecimentos.model.Usuario;
 import com.dev.consolidacaodeconhecimentos.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+
 @Service
 public class UsuarioService {
 
@@ -20,6 +24,7 @@ public class UsuarioService {
         }
 
         Usuario novoUsuario = new Usuario(dto);
+        novoUsuario.setDataCadastro(LocalDateTime.now());
         usuarioRepository.save(novoUsuario);
 
         return "O usuário " + dto.nome() + " foi cadastrado com sucesso!";
