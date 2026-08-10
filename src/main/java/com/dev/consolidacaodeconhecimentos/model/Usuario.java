@@ -1,5 +1,7 @@
 package com.dev.consolidacaodeconhecimentos.model;
 
+import com.dev.consolidacaodeconhecimentos.dto.CadastroUsuarioDTO;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,4 +37,14 @@ public class Usuario {
 
     @Column(nullable = false)
     private LocalDate dataCadastro;
+
+    //Constructors
+
+    public Usuario(CadastroUsuarioDTO dto){
+        this.nome = dto.nome();
+        this.email = dto.email();
+        this.cpf = dto.cpf();
+        this.telefone = dto.telefone();
+        this.dataNascimento = dto.dataNascimento();
+    }
 }
