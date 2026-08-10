@@ -1,13 +1,13 @@
 package com.dev.consolidacaodeconhecimentos.model;
 
 import com.dev.consolidacaodeconhecimentos.dto.CadastroUsuarioDTO;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="usuario")
@@ -36,7 +36,7 @@ public class Usuario {
     private LocalDate dataNascimento;
 
     @Column(nullable = false)
-    private LocalDate dataCadastro;
+    private LocalDateTime dataCadastro;
 
     //Constructors
 
