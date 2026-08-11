@@ -1,19 +1,15 @@
 package com.dev.consolidacaodeconhecimentos.service;
 
-import com.dev.consolidacaodeconhecimentos.dto.AtualizarUsuarioDTO;
-import com.dev.consolidacaodeconhecimentos.dto.CadastroUsuarioDTO;
+import com.dev.consolidacaodeconhecimentos.dto.UsuarioDTO;
 import com.dev.consolidacaodeconhecimentos.dto.ListagemUsuarioDTO;
 import com.dev.consolidacaodeconhecimentos.model.Usuario;
 import com.dev.consolidacaodeconhecimentos.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UsuarioService {
@@ -24,7 +20,7 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public String cadastrarUsuario(CadastroUsuarioDTO dto){
+    public String cadastrarUsuario(UsuarioDTO dto){
         if (usuarioRepository.existsUsuarioByEmail(dto.email())) {
             throw new RuntimeException("O usuário já está cadastrado!");
         }
@@ -55,7 +51,7 @@ public class UsuarioService {
     }
 
     @Transactional
-    public ListagemUsuarioDTO atualizarUsuario(Long id, AtualizarUsuarioDTO dtoAtualizado) {
+    public ListagemUsuarioDTO atualizarUsuario(Long id, UsuarioDTO dtoAtualizado) {
         Usuario usuarioAtual = usuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
 
         usuarioAtual.atualizarUsuario(dtoAtualizado);
