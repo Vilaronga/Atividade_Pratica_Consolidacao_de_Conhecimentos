@@ -5,22 +5,23 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
-    Optional<Usuario> findAllByNome(String nome);
+    List<Usuario> findAllByNome(String nome);
 
     Optional<Usuario> findByEmail(String email);
 
     Optional<Usuario> findByCpf(String cpf);
 
-    List<Usuario> findByTelefone(String telefone);
+    List<Usuario> findAllByTelefone(String telefone);
 
     List<Usuario> findAllByDataNascimento(LocalDate dataNascimento);
 
-    List<Usuario> findAllByDataCadastro(LocalDate dataCadastro);
+    List<Usuario> findAllByDataCadastro(LocalDateTime dataCadastro);
 
     boolean existsUsuarioByEmail(String email);
 
@@ -30,5 +31,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     boolean existsByDataNascimento(LocalDate dataNascimento);
 
-    boolean existsByDataCadastro(LocalDate dataCadastro);
+    boolean existsByDataCadastro(LocalDateTime dataCadastro);
 }
