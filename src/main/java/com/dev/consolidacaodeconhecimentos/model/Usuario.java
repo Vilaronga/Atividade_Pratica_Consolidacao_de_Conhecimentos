@@ -39,7 +39,6 @@ public class Usuario {
     private LocalDateTime dataCadastro;
 
     //Constructors
-
     public Usuario(UsuarioDTO dto){
         this.nome = dto.nome();
         this.email = dto.email();
