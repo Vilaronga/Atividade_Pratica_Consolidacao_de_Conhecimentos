@@ -1,5 +1,6 @@
 package com.dev.consolidacaodeconhecimentos.model;
 
+import com.dev.consolidacaodeconhecimentos.dto.AtualizarUsuarioDTO;
 import com.dev.consolidacaodeconhecimentos.dto.CadastroUsuarioDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -46,5 +47,27 @@ public class Usuario {
         this.cpf = dto.cpf();
         this.telefone = dto.telefone();
         this.dataNascimento = dto.dataNascimento();
+    }
+
+    public void atualizarUsuario(AtualizarUsuarioDTO dto){
+        if (dto.nome() != null) {
+            this.nome = dto.nome();
+        }
+
+        if (dto.cpf() != null) {
+            this.cpf = dto.cpf();
+        }
+
+        if (dto.email() != null) {
+            this.email = dto.email();
+        }
+
+        if (dto.telefone() != null) {
+            this.telefone = dto.telefone();
+        }
+
+        if (dto.dataNascimento() != null) {
+            this.dataNascimento = dto.dataNascimento();
+        }
     }
 }
