@@ -81,8 +81,8 @@ public class UsuarioService {
     }
 
     @Transactional(readOnly=true)
-    public List<ListagemUsuarioDTO> consultarUsuariosDtNasc(LocalDate dataNasc){
-        return usuarioRepository.findAllByDataNascimento(dataNasc)
+    public List<ListagemUsuarioDTO> consultarUsuariosDtNas(LocalDate dataNas){
+        return usuarioRepository.findAllByDataNascimento(dataNas)
                 .stream()
                 .map(ListagemUsuarioDTO::new)
                 .toList();
