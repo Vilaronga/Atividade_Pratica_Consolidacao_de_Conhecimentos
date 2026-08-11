@@ -1,7 +1,6 @@
 package com.dev.consolidacaodeconhecimentos.controller;
 
-import com.dev.consolidacaodeconhecimentos.dto.AtualizarUsuarioDTO;
-import com.dev.consolidacaodeconhecimentos.dto.CadastroUsuarioDTO;
+import com.dev.consolidacaodeconhecimentos.dto.UsuarioDTO;
 import com.dev.consolidacaodeconhecimentos.dto.ListagemUsuarioDTO;
 import com.dev.consolidacaodeconhecimentos.service.UsuarioService;
 import jakarta.validation.Valid;
@@ -22,7 +21,7 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<String> cadastrarUsuario(@RequestBody @Valid CadastroUsuarioDTO usuario) {
+    public ResponseEntity<String> cadastrarUsuario(@RequestBody @Valid UsuarioDTO usuario) {
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.cadastrarUsuario(usuario));
     }
 
@@ -37,7 +36,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/atualizar")
-    public ResponseEntity<ListagemUsuarioDTO> atualizarUsuario(@RequestParam Long id, @RequestBody AtualizarUsuarioDTO dto) {
+    public ResponseEntity<ListagemUsuarioDTO> atualizarUsuario(@RequestParam Long id, @RequestBody UsuarioDTO dto) {
         return ResponseEntity.ok().body(usuarioService.atualizarUsuario(id, dto));
     }
 
