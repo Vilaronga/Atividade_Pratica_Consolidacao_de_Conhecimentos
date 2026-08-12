@@ -110,6 +110,14 @@ public class UsuarioService {
         return new ListagemUsuarioDTO(usuarioAtual);
     }
 
+    @Transactional
+    public String alterarUsuario(Long id, String acao) {
+        String acaoFormatada = acao.toLowerCase();
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("O usuário não foi encontrado!"));
+        return usuario.alterarUsuario(acaoFormatada);
+    }
+
     //Delete
     @Transactional
     public ListagemUsuarioDTO excluirUsuario(Long id) {

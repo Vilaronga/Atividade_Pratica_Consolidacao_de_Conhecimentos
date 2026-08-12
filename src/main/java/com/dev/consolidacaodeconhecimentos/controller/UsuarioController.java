@@ -75,9 +75,29 @@ public class UsuarioController {
         return ResponseEntity.ok().body(usuarioService.atualizarUsuario(id, dto));
     }
 
+    @PutMapping("/alterar/ativar")
+    public ResponseEntity<String> ativarUsuario(@RequestParam Long id){
+        return ResponseEntity.ok().body(usuarioService.alterarUsuario(id, "ativar"));
+    }
+
+    @PutMapping("/alterar/inativar")
+    public ResponseEntity<String> inativarUsuario(@RequestParam Long id){
+        return ResponseEntity.ok().body(usuarioService.alterarUsuario(id, "inativar"));
+    }
+
+    @PutMapping("/alterar/excluir")
+    public ResponseEntity<String> excluirUsuario(@RequestParam Long id){
+        return ResponseEntity.ok().body(usuarioService.alterarUsuario(id, "excluir"));
+    }
+
+    @PutMapping("/alterar/resgatar")
+    public ResponseEntity<String> resgatarUsuario(@RequestParam Long id){
+        return ResponseEntity.ok().body(usuarioService.alterarUsuario(id, "resgatar"));
+    }
+
     // Delete
     @DeleteMapping("/deletar")
-    public ResponseEntity<ListagemUsuarioDTO> excluirUsuario(@RequestParam Long id){
+    public ResponseEntity<ListagemUsuarioDTO> deletarUsuario(@RequestParam Long id){
         return ResponseEntity.ok().body(usuarioService.excluirUsuario(id));
     }
 }
