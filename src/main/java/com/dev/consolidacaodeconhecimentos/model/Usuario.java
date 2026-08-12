@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -38,6 +39,12 @@ public class Usuario {
     @Column(nullable = false)
     private LocalDateTime dataCadastro;
 
+    @Column(nullable = true)
+    private LocalDateTime dataExclusao;
+
+    @Column(nullable = false)
+    private boolean ativo;
+
     //Constructors
     public Usuario(UsuarioDTO dto){
         this.nome = dto.nome();
@@ -45,6 +52,8 @@ public class Usuario {
         this.cpf = dto.cpf();
         this.telefone = dto.telefone();
         this.dataNascimento = dto.dataNascimento();
+        this.ativo = true;
+        this.dataExclusao = null;
     }
 
     public void atualizarUsuario(UsuarioDTO dto){
@@ -66,6 +75,41 @@ public class Usuario {
 
         if (dto.dataNascimento() != null) {
             this.dataNascimento = dto.dataNascimento();
+        }
+    }
+
+    public String alterarUsuario(String acao) {
+        switch (acao) {
+            case "ativar":
+                if (this.ativo) {
+                    return "O usuário já está ativo!";
+                }
+                this.ativo = true;
+                return "O usuário " + this.nome + " foi ativado!";
+
+            case "inativar":
+                if (!this.ativo) {
+                    return "O usuário já está inativo!";
+                }
+                this.ativo = false;
+                return "O usuário " + this.nome + " foi inativado!";
+
+            case "excluir":
+                if (this.dataExclusao != null) {
+                    return "O usuário não foi encontrado!";
+                }
+                this.dataExclusao = LocalDateTime.now();
+                return "O usuário " + this.nome + " foi excluído!";
+
+            case "resgatar":
+                if (this.dataExclusao == null) {
+                    return "O usuário já encontra-se disponível!";
+                }
+                this.dataExclusao = null;
+                return "O usuário " + this.nome + " foi resgatado!";
+
+            default:
+                return "O comando é inválido!";
         }
     }
 }

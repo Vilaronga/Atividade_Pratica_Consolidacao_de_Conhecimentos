@@ -5,7 +5,6 @@ import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 
 public record UsuarioDTO(
-
         @NotBlank(message = "O nome não pode estar vazio!")
         @Size(message = "O número de caracteres ultrapassa 200.", max=200)
         String nome,
