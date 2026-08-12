@@ -27,11 +27,14 @@ public class UsuarioService {
             throw new RuntimeException("O usuário já está cadastrado!");
         }
 
-        Usuario novoUsuario = new Usuario(dto);
-        novoUsuario.setDataCadastro(LocalDateTime.now());
-        usuarioRepository.save(novoUsuario);
+        if (validarCpf(dto.cpf()) && validarTelefone(dto.telefone()) && validarNome(dto.nome())){
+            Usuario novoUsuario = new Usuario(dto);
+            novoUsuario.setDataCadastro(LocalDateTime.now());
+            usuarioRepository.save(novoUsuario);
 
-        return "O usuário " + dto.nome() + " foi cadastrado com sucesso!";
+            return "O usuário " + dto.nome() + " foi cadastrado com sucesso!";
+        }
+        return "Dados inválidos!";
     }
 
     //Read - Get
@@ -117,5 +120,18 @@ public class UsuarioService {
         usuarioRepository.deleteById(id);
 
         return usuarioExcluido;
+    }
+
+    // Métodos auxiliares
+    public boolean validarCpf(String numero) {
+        return numero.matches("[0-9]{11}");
+    }
+
+    public boolean validarTelefone(String numero) {
+        return numero.matches("[0-9]{10,11}");
+    }
+
+    public boolean validarNome(String nome) {
+        return nome.matches("^[a-zA-ZÀ-ÿ]{2,}(\s?[a-zA-ZÀ-ÿ]{2,})*$");
     }
 }
