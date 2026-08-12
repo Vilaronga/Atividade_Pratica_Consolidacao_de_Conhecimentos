@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -133,6 +132,6 @@ public class UsuarioService {
     }
 
     public boolean validarNome(String nome) {
-        return nome.matches("^[a-zA-Z]{2,}(\s?[a-zA-Z]{2,})$");
+        return nome.matches("^[a-zA-ZÀ-ÿ]{2,}(\s?[a-zA-ZÀ-ÿ]{2,})*$");
     }
 }
