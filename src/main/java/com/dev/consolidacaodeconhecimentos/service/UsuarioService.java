@@ -62,6 +62,14 @@ public class UsuarioService {
     }
 
     @Transactional(readOnly=true)
+    public List<ListagemUsuarioDTO> buscarUsuariosNome(String nome){
+        return usuarioRepository.findByNomeContainingIgnoreCase(nome)
+                .stream()
+                .map(ListagemUsuarioDTO::new)
+                .toList();
+    }
+
+    @Transactional(readOnly=true)
     public ListagemUsuarioDTO consultarUsuarioEmail(String email){
         Usuario usuario = usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));

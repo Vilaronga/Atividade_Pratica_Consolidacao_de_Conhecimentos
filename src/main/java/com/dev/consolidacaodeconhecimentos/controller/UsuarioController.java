@@ -44,6 +44,11 @@ public class UsuarioController {
         return ResponseEntity.ok().body(usuarioService.consultarUsuariosNome(nome));
     }
 
+    @GetMapping("/nome/buscar/{nome}")
+    public ResponseEntity<List<ListagemUsuarioDTO>> buscarUsuarioPorNome(@PathVariable String nome){
+        return ResponseEntity.ok().body(usuarioService.buscarUsuariosNome(nome));
+    }
+
     @GetMapping("/email/{email}")
     public ResponseEntity<ListagemUsuarioDTO> consultarUsuarioPorEmail(@PathVariable String email){
         return ResponseEntity.ok().body(usuarioService.consultarUsuarioEmail(email));
