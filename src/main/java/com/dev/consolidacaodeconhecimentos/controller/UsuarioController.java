@@ -64,6 +64,11 @@ public class UsuarioController {
         return ResponseEntity.ok().body(usuarioService.consultarUsuarioCpf(cpf));
     }
 
+    @GetMapping("/cpf/buscar/{cpf}")
+    public ResponseEntity<List<ListagemUsuarioDTO>> buscarUsuarioPorCpf(@PathVariable String cpf) {
+        return ResponseEntity.ok().body(usuarioService.buscarUsuarioCpf(cpf));
+    }
+
     @GetMapping("/telefone/{telefone}")
     public ResponseEntity<List<ListagemUsuarioDTO>> consultarUsuarioPorTelefone(@PathVariable String telefone){
         return ResponseEntity.ok().body(usuarioService.consultarUsuariosTel(telefone));

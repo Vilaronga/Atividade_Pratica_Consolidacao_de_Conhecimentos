@@ -21,6 +21,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     Optional<Usuario> findByCpf(String cpf);
 
+    List<Usuario> findByCpfContainingIgnoreCase(String cpf);
+
     List<Usuario> findAllByTelefone(String telefone);
 
     List<Usuario> findAllByDataNascimento(LocalDate dataNascimento);
