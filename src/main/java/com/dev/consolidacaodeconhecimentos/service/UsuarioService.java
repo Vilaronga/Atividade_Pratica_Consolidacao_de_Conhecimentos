@@ -62,7 +62,10 @@ public class UsuarioService {
     }
 
     @Transactional(readOnly=true)
-    public List<ListagemUsuarioDTO> buscarUsuariosNome(String nome){
+    public List<ListagemUsuarioDTO> buscarUsuariosNome(String nome) {
+        if (nome.length() < 2) {
+            return List.of();
+        }
         return usuarioRepository.findByNomeContainingIgnoreCase(nome)
                 .stream()
                 .map(ListagemUsuarioDTO::new)
@@ -74,6 +77,14 @@ public class UsuarioService {
         Usuario usuario = usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
         return new ListagemUsuarioDTO(usuario);
+    }
+
+    @Transactional(readOnly=true)
+    public List<ListagemUsuarioDTO> buscarUsuarioEmail(String email){
+        return usuarioRepository.findByEmailContainingIgnoreCase(email)
+                .stream()
+                .map(ListagemUsuarioDTO::new)
+                .toList();
     }
 
     @Transactional(readOnly=true)
@@ -141,5 +152,11 @@ public class UsuarioService {
 
     public boolean validarNome(String nome) {
         return nome.matches("^[a-zA-ZÀ-ÿ]{2,}(\s?[a-zA-ZÀ-ÿ]{2,})*$");
+    }
+    // Apenas um método alternativo de tratamento de dados
+    public String tratarNumeros(String numero) {
+        String valorTratado = numero.replaceAll("\\{Punct}", "");
+        System.out.print(valorTratado);
+        return valorTratado;
     }
 }

@@ -54,6 +54,11 @@ public class UsuarioController {
         return ResponseEntity.ok().body(usuarioService.consultarUsuarioEmail(email));
     }
 
+    @GetMapping("/email/buscar/{email}")
+    public ResponseEntity<List<ListagemUsuarioDTO>> buscarUsuarioPorEmail(@PathVariable String email){
+        return ResponseEntity.ok().body(usuarioService.buscarUsuarioEmail(email));
+    }
+
     @GetMapping("/cpf/{cpf}")
     public ResponseEntity<ListagemUsuarioDTO> consultarUsuarioPorCpf(@PathVariable String cpf){
         return ResponseEntity.ok().body(usuarioService.consultarUsuarioCpf(cpf));
