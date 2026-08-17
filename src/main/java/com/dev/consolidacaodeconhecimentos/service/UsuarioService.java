@@ -125,6 +125,15 @@ public class UsuarioService {
                 .toList();
     }
 
+    //TODO terminar a lógica de filtro por data
+    @Transactional(readOnly = true)
+    public List<ListagemUsuarioDTO> buscarUsuarioDtNas(LocalDate dataNas) {
+        return usuarioRepository.findByDataNascimentoContainingIgnoreCase(dataNas)
+                .stream()
+                .map(ListagemUsuarioDTO::new)
+                .toList();
+    }
+
     @Transactional(readOnly=true)
     public List<ListagemUsuarioDTO> consultarUsuariosDtCad(LocalDateTime dataCad){
         return usuarioRepository.findAllByDataCadastro(dataCad)
