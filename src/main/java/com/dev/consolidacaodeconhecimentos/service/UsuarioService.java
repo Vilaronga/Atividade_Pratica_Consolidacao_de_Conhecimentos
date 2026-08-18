@@ -23,7 +23,7 @@ public class UsuarioService {
     //Create - Post
     @Transactional
     public String cadastrarUsuario(UsuarioDTO dto){
-        if (usuarioRepository.existsUsuarioByEmail(dto.email())) {
+        if (usuarioRepository.existsUsuarioByEmailAndDataExclusaoIsNull(dto.email())) {
             throw new RuntimeException("O usuário já está cadastrado!");
         }
 
@@ -40,7 +40,31 @@ public class UsuarioService {
     //Read - Get
     @Transactional(readOnly=true)
     public List<ListagemUsuarioDTO> consultarUsuarios(){
-        return usuarioRepository.findAll()
+        return usuarioRepository.findByDataExclusaoIsNull()
+                .stream()
+                .map(ListagemUsuarioDTO::new)
+                .toList();
+    }
+
+    @Transactional(readOnly=true)
+    public List<ListagemUsuarioDTO> consultarUsuariosExcluidos(){
+        return usuarioRepository.findByDataExclusaoIsNotNull()
+                .stream()
+                .map(ListagemUsuarioDTO::new)
+                .toList();
+    }
+
+    @Transactional(readOnly=true)
+    public List<ListagemUsuarioDTO> consultarUsuariosAtivos(){
+        return usuarioRepository.findByAtivoIsTrue()
+                .stream()
+                .map(ListagemUsuarioDTO::new)
+                .toList();
+    }
+
+    @Transactional(readOnly=true)
+    public List<ListagemUsuarioDTO> consultarUsuariosInativos(){
+        return usuarioRepository.findByAtivoIsFalseAndDataExclusaoIsNull()
                 .stream()
                 .map(ListagemUsuarioDTO::new)
                 .toList();
@@ -55,7 +79,7 @@ public class UsuarioService {
 
     @Transactional(readOnly=true)
     public List<ListagemUsuarioDTO> consultarUsuariosNome(String nome){
-        return usuarioRepository.findAllByNome(nome)
+        return usuarioRepository.findAllByNomeAndDataExclusaoIsNull(nome)
                 .stream()
                 .map(ListagemUsuarioDTO::new)
                 .toList();
@@ -66,7 +90,7 @@ public class UsuarioService {
         if (nome.length() < 2) {
             return List.of();
         }
-        return usuarioRepository.findByNomeContainingIgnoreCase(nome)
+        return usuarioRepository.findByNomeContainingIgnoreCaseAndDataExclusaoIsNull(nome)
                 .stream()
                 .map(ListagemUsuarioDTO::new)
                 .toList();
@@ -74,7 +98,7 @@ public class UsuarioService {
 
     @Transactional(readOnly=true)
     public ListagemUsuarioDTO consultarUsuarioEmail(String email){
-        Usuario usuario = usuarioRepository.findByEmail(email)
+        Usuario usuario = usuarioRepository.findByEmailAndDataExclusaoIsNull(email)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
         return new ListagemUsuarioDTO(usuario);
     }
@@ -84,7 +108,7 @@ public class UsuarioService {
         if (email.length() < 2) {
             return List.of();
         }
-        return usuarioRepository.findByEmailContainingIgnoreCase(email)
+        return usuarioRepository.findByEmailContainingIgnoreCaseAndDataExclusaoIsNull(email)
                 .stream()
                 .map(ListagemUsuarioDTO::new)
                 .toList();
@@ -92,7 +116,7 @@ public class UsuarioService {
 
     @Transactional(readOnly=true)
     public ListagemUsuarioDTO consultarUsuarioCpf(String cpf){
-        Usuario usuario = usuarioRepository.findByCpf(cpf)
+        Usuario usuario = usuarioRepository.findByCpfAndDataExclusaoIsNull(cpf)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
         return new ListagemUsuarioDTO(usuario);
     }
@@ -103,7 +127,7 @@ public class UsuarioService {
             return List.of();
         }
 
-        return usuarioRepository.findByCpfContainingIgnoreCase(cpf)
+        return usuarioRepository.findByCpfContainingAndDataExclusaoIsNull(cpf)
                 .stream()
                 .map(ListagemUsuarioDTO::new)
                 .toList();
@@ -111,7 +135,7 @@ public class UsuarioService {
 
     @Transactional(readOnly=true)
     public List<ListagemUsuarioDTO> consultarUsuariosTel(String telefone){
-        return usuarioRepository.findAllByTelefone(telefone)
+        return usuarioRepository.findAllByTelefoneAndDataExclusaoIsNull(telefone)
                 .stream()
                 .map(ListagemUsuarioDTO::new)
                 .toList();
@@ -119,7 +143,7 @@ public class UsuarioService {
 
     @Transactional(readOnly=true)
     public List<ListagemUsuarioDTO> consultarUsuariosDtNas(LocalDate dataNas){
-        return usuarioRepository.findAllByDataNascimento(dataNas)
+        return usuarioRepository.findAllByDataNascimentoAndDataExclusaoIsNull(dataNas)
                 .stream()
                 .map(ListagemUsuarioDTO::new)
                 .toList();
@@ -128,7 +152,7 @@ public class UsuarioService {
     //TODO terminar a lógica de filtro por data
     @Transactional(readOnly = true)
     public List<ListagemUsuarioDTO> buscarUsuarioDtNas(LocalDate dataNas) {
-        return usuarioRepository.findByDataNascimentoContainingIgnoreCase(dataNas)
+        return usuarioRepository.findByDataNascimentoContainingIgnoreCaseAndDataExclusaoIsNull(dataNas)
                 .stream()
                 .map(ListagemUsuarioDTO::new)
                 .toList();
@@ -136,7 +160,7 @@ public class UsuarioService {
 
     @Transactional(readOnly=true)
     public List<ListagemUsuarioDTO> consultarUsuariosDtCad(LocalDateTime dataCad){
-        return usuarioRepository.findAllByDataCadastro(dataCad)
+        return usuarioRepository.findAllByDataCadastroAndDataExclusaoIsNull(dataCad)
                 .stream()
                 .map(ListagemUsuarioDTO::new)
                 .toList();

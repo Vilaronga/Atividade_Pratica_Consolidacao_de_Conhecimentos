@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -98,6 +97,7 @@ public class Usuario {
                 if (this.dataExclusao != null) {
                     return "O usuário não foi encontrado!";
                 }
+                this.ativo = false;
                 this.dataExclusao = LocalDateTime.now();
                 return "O usuário " + this.nome + " foi excluído!";
 
@@ -105,6 +105,7 @@ public class Usuario {
                 if (this.dataExclusao == null) {
                     return "O usuário já encontra-se disponível!";
                 }
+                this.ativo = true;
                 this.dataExclusao = null;
                 return "O usuário " + this.nome + " foi resgatado!";
 

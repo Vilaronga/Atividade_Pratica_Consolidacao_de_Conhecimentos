@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("usuario")
+@RequestMapping("usuarios")
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
@@ -32,6 +32,21 @@ public class UsuarioController {
     @GetMapping
     public ResponseEntity<List<ListagemUsuarioDTO>> consultarUsuarios(){
         return ResponseEntity.ok().body(usuarioService.consultarUsuarios());
+    }
+
+    @GetMapping("/excluidos")
+    public ResponseEntity<List<ListagemUsuarioDTO>> consultarUsuariosExcluidos(){
+        return ResponseEntity.ok().body(usuarioService.consultarUsuariosExcluidos());
+    }
+
+    @GetMapping("/ativos")
+    public ResponseEntity<List<ListagemUsuarioDTO>> consultarUsuariosAtivos(){
+        return ResponseEntity.ok().body(usuarioService.consultarUsuariosAtivos());
+    }
+
+    @GetMapping("/inativos")
+    public ResponseEntity<List<ListagemUsuarioDTO>> consultarUsuariosInativos(){
+        return ResponseEntity.ok().body(usuarioService.consultarUsuariosInativos());
     }
 
     @GetMapping("/{id}")
