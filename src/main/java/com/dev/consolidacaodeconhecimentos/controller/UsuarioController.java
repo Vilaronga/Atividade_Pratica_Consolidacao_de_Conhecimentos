@@ -44,14 +44,29 @@ public class UsuarioController {
         return ResponseEntity.ok().body(usuarioService.consultarUsuariosNome(nome));
     }
 
+    @GetMapping("/nome/buscar/{nome}")
+    public ResponseEntity<List<ListagemUsuarioDTO>> buscarUsuarioPorNome(@PathVariable String nome){
+        return ResponseEntity.ok().body(usuarioService.buscarUsuariosNome(nome));
+    }
+
     @GetMapping("/email/{email}")
     public ResponseEntity<ListagemUsuarioDTO> consultarUsuarioPorEmail(@PathVariable String email){
         return ResponseEntity.ok().body(usuarioService.consultarUsuarioEmail(email));
     }
 
+    @GetMapping("/email/buscar/{email}")
+    public ResponseEntity<List<ListagemUsuarioDTO>> buscarUsuarioPorEmail(@PathVariable String email){
+        return ResponseEntity.ok().body(usuarioService.buscarUsuarioEmail(email));
+    }
+
     @GetMapping("/cpf/{cpf}")
     public ResponseEntity<ListagemUsuarioDTO> consultarUsuarioPorCpf(@PathVariable String cpf){
         return ResponseEntity.ok().body(usuarioService.consultarUsuarioCpf(cpf));
+    }
+
+    @GetMapping("/cpf/buscar/{cpf}")
+    public ResponseEntity<List<ListagemUsuarioDTO>> buscarUsuarioPorCpf(@PathVariable String cpf) {
+        return ResponseEntity.ok().body(usuarioService.buscarUsuarioCpf(cpf));
     }
 
     @GetMapping("/telefone/{telefone}")

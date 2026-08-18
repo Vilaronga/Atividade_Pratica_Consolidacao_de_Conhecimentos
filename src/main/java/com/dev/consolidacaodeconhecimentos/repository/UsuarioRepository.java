@@ -13,13 +13,21 @@ import java.util.Optional;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     List<Usuario> findAllByNome(String nome);
 
+    List<Usuario> findByNomeContainingIgnoreCase(String nome);
+
     Optional<Usuario> findByEmail(String email);
 
+    List<Usuario> findByEmailContainingIgnoreCase(String email);
+
     Optional<Usuario> findByCpf(String cpf);
+
+    List<Usuario> findByCpfContainingIgnoreCase(String cpf);
 
     List<Usuario> findAllByTelefone(String telefone);
 
     List<Usuario> findAllByDataNascimento(LocalDate dataNascimento);
+
+    List<Usuario> findByDataNascimentoContainingIgnoreCase(LocalDate dataNascimento);
 
     List<Usuario> findAllByDataCadastro(LocalDateTime dataCadastro);
 

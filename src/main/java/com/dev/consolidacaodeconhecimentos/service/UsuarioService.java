@@ -62,6 +62,17 @@ public class UsuarioService {
     }
 
     @Transactional(readOnly=true)
+    public List<ListagemUsuarioDTO> buscarUsuariosNome(String nome) {
+        if (nome.length() < 2) {
+            return List.of();
+        }
+        return usuarioRepository.findByNomeContainingIgnoreCase(nome)
+                .stream()
+                .map(ListagemUsuarioDTO::new)
+                .toList();
+    }
+
+    @Transactional(readOnly=true)
     public ListagemUsuarioDTO consultarUsuarioEmail(String email){
         Usuario usuario = usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
@@ -69,10 +80,33 @@ public class UsuarioService {
     }
 
     @Transactional(readOnly=true)
+    public List<ListagemUsuarioDTO> buscarUsuarioEmail(String email){
+        if (email.length() < 2) {
+            return List.of();
+        }
+        return usuarioRepository.findByEmailContainingIgnoreCase(email)
+                .stream()
+                .map(ListagemUsuarioDTO::new)
+                .toList();
+    }
+
+    @Transactional(readOnly=true)
     public ListagemUsuarioDTO consultarUsuarioCpf(String cpf){
         Usuario usuario = usuarioRepository.findByCpf(cpf)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
         return new ListagemUsuarioDTO(usuario);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ListagemUsuarioDTO> buscarUsuarioCpf(String cpf) {
+        if (cpf.length() < 2) {
+            return List.of();
+        }
+
+        return usuarioRepository.findByCpfContainingIgnoreCase(cpf)
+                .stream()
+                .map(ListagemUsuarioDTO::new)
+                .toList();
     }
 
     @Transactional(readOnly=true)
@@ -86,6 +120,15 @@ public class UsuarioService {
     @Transactional(readOnly=true)
     public List<ListagemUsuarioDTO> consultarUsuariosDtNas(LocalDate dataNas){
         return usuarioRepository.findAllByDataNascimento(dataNas)
+                .stream()
+                .map(ListagemUsuarioDTO::new)
+                .toList();
+    }
+
+    //TODO terminar a lógica de filtro por data
+    @Transactional(readOnly = true)
+    public List<ListagemUsuarioDTO> buscarUsuarioDtNas(LocalDate dataNas) {
+        return usuarioRepository.findByDataNascimentoContainingIgnoreCase(dataNas)
                 .stream()
                 .map(ListagemUsuarioDTO::new)
                 .toList();
@@ -141,5 +184,11 @@ public class UsuarioService {
 
     public boolean validarNome(String nome) {
         return nome.matches("^[a-zA-ZÀ-ÿ]{2,}(\s?[a-zA-ZÀ-ÿ]{2,})*$");
+    }
+    // Método alternativo de tratamento de dados
+    public String tratarNumeros(String numero) {
+        String valorTratado = numero.replaceAll("\\{Punct}", "");
+        System.out.print(valorTratado);
+        return valorTratado;
     }
 }
