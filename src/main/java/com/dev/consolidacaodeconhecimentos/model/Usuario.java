@@ -20,25 +20,25 @@ public class Usuario {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(length = 100, nullable = false)
     private String nome;
 
-    @Column(nullable = false, unique = true)
+    @Column(length = 100, nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false, unique = true)
+    @Column(length = 11, nullable = false, unique = true)
     private String cpf;
 
-    @Column(nullable = false)
+    @Column(length = 11, nullable = false)
     private String telefone;
 
     @Column(nullable = false)
     private LocalDate dataNascimento;
 
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 0)
     private LocalDateTime dataCadastro;
 
-    @Column(nullable = true)
+    @Column(nullable = true, precision = 0)
     private LocalDateTime dataExclusao;
 
     @Column(nullable = false)
